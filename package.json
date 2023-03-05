@@ -1,0 +1,25 @@
+{
+  "name": "create-chroma",
+  "version": "1.0.0",
+  "description": "The CLI tool for making webapps with Chroma.",
+  "main": "index.js",
+  "bin": "bin.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chromajs/cli.git"
+  },
+  "author": "Chroma",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chromajs/cli/issues"
+  },
+  "homepage": "https://github.com/chromajs/cli#readme",
+  "type": "module",
+  "dependencies": {
+    "@clack/prompts": "^0.6.1",
+    "kleur": "^4.1.5"
+  }
+}

@@ -1,2 +1,11 @@
-# create-chroma-app
-The Chroma CLI tool to create a Chroma application.
+# Chroma CLI
+
+The CLI tool for making webapps with Chroma.
+
+## Usage
+
+```shell
+npm create chroma
+npm install
+npm run dev
+```
