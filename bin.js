@@ -5,7 +5,11 @@ import path from 'node:path';
 import * as prompt from '@clack/prompts';
 import format from 'kleur';
 
-import * as util from './utils';
+import * as util from './utils.js';
+
+import shared from './assets/shared.js';
+
+// Prompts
 
 const { version } = JSON.parse(
   fs.readFileSync(new URL('package.json', import.meta.url), 'utf-8')
@@ -62,14 +66,6 @@ const options = await prompt.group(
             label: `${format.blue('React')}`,
             value: 're',
           },
-          {
-            label: `${format.magenta('Preact')}`,
-            value: 'pr',
-          },
-          {
-            label: `${format.red('Lit')}`,
-            value: 'li',
-          },
         ],
       }),
 
@@ -93,6 +89,8 @@ const options = await prompt.group(
 
 prompt.outro(`Your project is ready!`);
 
+// Create/Clear Directory
+
 if (cwd && !fs.existsSync(cwd)) {
   fs.mkdirSync(cwd);
 } else {
@@ -107,10 +105,17 @@ if (cwd && !fs.existsSync(cwd)) {
   });
 }
 
-fs.writeFileSync(join(cwd, 'p'));
+// Create Shared Files
+
+Object.keys(shared).forEach(key => {
+  util.addFile(path.join(cwd, key), shared[key]);
+});
+
+// Create Files for Framework/Lang
 
 switch (options.framework) {
   case 'va':
+
     switch (options.lang) {
       case 'js':
         break;
@@ -135,22 +140,6 @@ switch (options.framework) {
     }
     break;
   case 're':
-    switch (options.lang) {
-      case 'js':
-        break;
-      case 'ts':
-        break;
-    }
-    break;
-  case 'pr':
-    switch (options.lang) {
-      case 'js':
-        break;
-      case 'ts':
-        break;
-    }
-    break;
-  case 'li':
     switch (options.lang) {
       case 'js':
         break;
