@@ -1,8 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-let data;
-
 export function addFile(filepath, src) {
   if (filepath.split('/').length > 2) {
     filepath.map(folder => {
@@ -21,7 +19,10 @@ export function addFile(filepath, src) {
   );
 }
 
-export function getFile(filepath, key) {
-  data = fs.readFileSync(filepath, 'utf-8');
-  return data[key];
+export async function parseData(framework, lang, cwd) {
+  await import(`./assets/${framework}.js`).then(data => {
+    Object.keys(data.default[lang]).forEach(key => {
+      addFile(path.join(cwd, key), data.default[lang][key]);
+    });
+  });
 }

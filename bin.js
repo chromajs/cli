@@ -8,8 +8,6 @@ import format from 'kleur';
 import * as util from './utils.js';
 import common from './assets/common.js';
 
-// Prompts
-
 const { version } = JSON.parse(
   fs.readFileSync(new URL('package.json', import.meta.url), 'utf-8')
 );
@@ -54,7 +52,7 @@ const options = await prompt.group(
             value: 'va',
           },
           {
-            label: `${format.white('Svelte')}`,
+            label: `${format.red('Svelte')}`,
             value: 'sv',
           },
           {
@@ -86,9 +84,9 @@ const options = await prompt.group(
   { onCancel: () => process.exit(1) }
 );
 
-prompt.outro(`Your project is ready!`);
-
-// Create/Clear Directory
+prompt.outro(
+  `Your project is ready!\n\tNext Steps:\n\nnpm install\nnpm run dev\n\nIf you need help, see the docs (https://chromajs.github.io).`
+);
 
 if (cwd && !fs.existsSync(cwd)) {
   fs.mkdirSync(cwd);
@@ -104,54 +102,8 @@ if (cwd && !fs.existsSync(cwd)) {
   });
 }
 
-// Create Shared Files
-
 Object.keys(common).forEach(key => {
   util.addFile(path.join(cwd, key), common[key]);
 });
 
-// Create Files for Framework/Lang
-let addData;
-
-switch (options.framework) {
-  case 'va':
-    switch (options.lang) {
-      case 'js':
-        addData = util.getFile('./assets/vanilla.js', 'js');
-        break;
-      case 'ts':
-        addData = util.getFile('./assets/vanilla.js', 'ts');
-        break;
-    }
-    break;
-  case 'sv':
-    switch (options.lang) {
-      case 'js':
-        addData = util.getFile('./assets/svelte.js', 'js');
-        break;
-      case 'ts':
-        addData = util.getFile('./assets/svelte.js', 'ts');
-        break;
-    }
-    break;
-  case 'vu':
-    switch (options.lang) {
-      case 'js':
-        addData = util.getFile('./assets/vue.js', 'js');
-        break;
-      case 'ts':
-        addData = util.getFile('./assets/vue.js', 'ts');
-        break;
-    }
-    break;
-  case 're':
-    switch (options.lang) {
-      case 'js':
-        addData = util.getFile('./assets/react.js', 'js');
-        break;
-      case 'ts':
-        addData = util.getFile('./assets/react.js', 'ts');
-        break;
-    }
-    break;
-}
+util.parseData(options.framework, options.lang, cwd);
