@@ -6,8 +6,7 @@ import * as prompt from '@clack/prompts';
 import format from 'kleur';
 
 import * as util from './utils.js';
-
-import shared from './assets/shared.js';
+import common from './assets/common.js';
 
 // Prompts
 
@@ -107,43 +106,51 @@ if (cwd && !fs.existsSync(cwd)) {
 
 // Create Shared Files
 
-Object.keys(shared).forEach(key => {
-  util.addFile(path.join(cwd, key), shared[key]);
+Object.keys(common).forEach(key => {
+  util.addFile(path.join(cwd, key), common[key]);
 });
 
 // Create Files for Framework/Lang
+let addData;
 
 switch (options.framework) {
   case 'va':
-
     switch (options.lang) {
       case 'js':
+        addData = util.getFile('./assets/vanilla.js', 'js');
         break;
       case 'ts':
+        addData = util.getFile('./assets/vanilla.js', 'ts');
         break;
     }
     break;
   case 'sv':
     switch (options.lang) {
       case 'js':
+        addData = util.getFile('./assets/svelte.js', 'js');
         break;
       case 'ts':
+        addData = util.getFile('./assets/svelte.js', 'ts');
         break;
     }
     break;
   case 'vu':
     switch (options.lang) {
       case 'js':
+        addData = util.getFile('./assets/vue.js', 'js');
         break;
       case 'ts':
+        addData = util.getFile('./assets/vue.js', 'ts');
         break;
     }
     break;
   case 're':
     switch (options.lang) {
       case 'js':
+        addData = util.getFile('./assets/react.js', 'js');
         break;
       case 'ts':
+        addData = util.getFile('./assets/react.js', 'ts');
         break;
     }
     break;
