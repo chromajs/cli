@@ -1,7 +1,14 @@
 #!/usr/bin/env node
-import { existsSync, readdirSync, rmSync, mkdirSync } from 'node:fs';
+import {
+  existsSync,
+  readdirSync,
+  rmSync,
+  mkdirSync,
+  createReadStream,
+} from 'node:fs';
 import { text, isCancel, confirm, group, select, outro } from '@clack/prompts';
 import { color } from 'console-log-colors';
+import unzipper from 'unzipper';
 
 let cwd = process.argv[2] || '.';
 
@@ -41,18 +48,22 @@ const options = await group(
         options: [
           {
             label: `${color.yellow('Vanilla')}`,
+            // @ts-ignore
             value: 'va',
           },
           {
             label: `${color.red('Svelte')}`,
+            // @ts-ignore
             value: 'sv',
           },
           {
             label: `${color.green('Vue')}`,
+            // @ts-ignore
             value: 'vu',
           },
           {
             label: `${color.blue('React')}`,
+            // @ts-ignore
             value: 're',
           },
         ],
@@ -64,10 +75,12 @@ const options = await group(
         options: [
           {
             label: `${color.yellow('JavaScript')}`,
+            // @ts-ignore
             value: 'js',
           },
           {
             label: `${color.blue('TypeScript')}`,
+            // @ts-ignore
             value: 'ts',
           },
         ],
@@ -76,11 +89,13 @@ const options = await group(
   { onCancel: () => process.exit(1) }
 );
 
-outro(
-  `Your project is ready!\n\tNext Steps:\n\nnpm install\nnpm run dev\n\nIf you need help, see the docs (https://chromajs.github.io).`
-);
-
 if (existsSync(cwd)) rmSync(cwd, { recursive: true, force: true });
 mkdirSync(cwd);
 
-export {};
+createReadStream(`./assets/${options.framework}.${options.lang}.zip`).pipe(
+  unzipper.Extract({ path: cwd })
+);
+
+outro(
+  `Your project is ready!\n\tNext Steps:\n\nnpm install\nnpm run dev\n\nIf you need help, see the docs (https://chromajs.github.io).`
+);
