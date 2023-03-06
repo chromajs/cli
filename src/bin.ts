@@ -107,6 +107,10 @@ if (options.framework === "static") {
     unzipper.Extract({ path: cwd })
   );
 } else {
+  if (options.lang === "html") {
+    console.log("HTML is unavailable to your framework!");
+    process.exit(1);
+  }
   createReadStream(`./assets/${options.framework}.${options.lang}.zip`).pipe(
     unzipper.Extract({ path: cwd })
   );
