@@ -2,10 +2,13 @@
   "name": "create-chroma",
   "version": "1.0.0",
   "description": "The CLI tool for making webapps with Chroma.",
-  "main": "index.js",
-  "bin": "bin.js",
+  "main": "./dist/bin.js",
+  "bin": {
+    "create-chroma": "./dist/bin.js"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc && echo 'Compiled files to ./dist'",
+    "start": "tsc && node ./dist/bin.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +23,10 @@
   "type": "module",
   "dependencies": {
     "@clack/prompts": "^0.6.1",
-    "kleur": "^4.1.5"
+    "console-log-colors": "^0.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.14.6",
+    "typescript": "^4.9.5"
   }
 }
