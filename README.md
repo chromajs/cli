@@ -1,4 +1,4 @@
-# Chroma CLI
+# @chromajs/cli
 
 The CLI tool for making webapps with Chroma.
 
