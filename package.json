@@ -1,10 +1,10 @@
 {
-  "name": "create-chroma",
+  "name": "@chromajs/create",
   "version": "1.0.0",
   "description": "The CLI tool for making webapps with Chroma.",
   "main": "./dist/bin.js",
   "bin": {
-    "create-chroma": "./dist/bin.js"
+    "create": "./dist/bin.js"
   },
   "scripts": {
     "build": "tsc && echo 'Compiled files to ./dist'",
